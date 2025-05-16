@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -12,6 +11,9 @@ const TutorProfilePage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [tutor, setTutor] = useState<Tutor | null>(null);
   const [loading, setLoading] = useState(true);
+  const [reviewModalOpen, setReviewModalOpen] = useState(false);
+  const [reviewText, setReviewText] = useState("");
+  const [reviewRating, setReviewRating] = useState(5);
 
   useEffect(() => {
     // Simulate API fetch with a slight delay
@@ -47,6 +49,15 @@ const TutorProfilePage: React.FC = () => {
       </div>
     );
   }
+
+  const handleReviewSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // In real app: send review to backend
+    setReviewModalOpen(false);
+    setReviewText("");
+    setReviewRating(5);
+    alert("Thank you for your review!");
+  };
 
   return (
     <div className="container mx-auto px-6 py-12">
@@ -127,9 +138,14 @@ const TutorProfilePage: React.FC = () => {
             </TabsContent>
             
             <TabsContent value="reviews" className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-xl font-semibold mb-6">Student Reviews</h2>
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-semibold">Student Reviews</h2>
+                <Button variant="outline" className="border-tutorpro-teal text-tutorpro-teal" onClick={() => setReviewModalOpen(true)}>
+                  <Star className="h-4 w-4 mr-2" /> Leave a Review
+                </Button>
+              </div>
               
-              {/* Sample reviews (in a real app, these would come from the API) */}
+              {/* Sample reviews (keep current reviews block) */}
               <div className="space-y-6">
                 <div className="border-b pb-6">
                   <div className="flex items-center mb-2">
@@ -178,6 +194,46 @@ const TutorProfilePage: React.FC = () => {
                   </div>
                 </div>
               </div>
+              
+              {/* Review modal UI (UI only) */}
+              {reviewModalOpen && (
+                <div className="fixed inset-0 bg-black bg-opacity-20 flex items-center justify-center z-50">
+                  <form onSubmit={handleReviewSubmit} className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full relative">
+                    <button
+                      type="button"
+                      onClick={() => setReviewModalOpen(false)}
+                      className="absolute top-2 right-3 text-gray-400 hover:text-gray-700"
+                      aria-label="Close"
+                    >
+                      ×
+                    </button>
+                    <h3 className="text-lg font-bold mb-4">Leave a Review</h3>
+                    <label className="block mb-2 font-medium">Rating</label>
+                    <div className="flex items-center gap-1 mb-4">
+                      {[1, 2, 3, 4, 5].map((n) => (
+                        <button
+                          key={n}
+                          type="button"
+                          className={`p-1 ${reviewRating >= n ? "text-yellow-500" : "text-gray-300"}`}
+                          onClick={() => setReviewRating(n)}
+                          aria-label={`Set rating ${n}`}
+                        >
+                          <Star className="h-6 w-6 fill-current" />
+                        </button>
+                      ))}
+                    </div>
+                    <label className="block mb-2 font-medium">Your Review</label>
+                    <textarea
+                      className="border rounded px-3 py-2 w-full mb-4"
+                      value={reviewText}
+                      onChange={e => setReviewText(e.target.value)}
+                      rows={3}
+                      required
+                    />
+                    <Button type="submit" className="w-full bg-tutorpro-teal hover:bg-tutorpro-blue">Submit Review</Button>
+                  </form>
+                </div>
+              )}
             </TabsContent>
           </Tabs>
         </div>
