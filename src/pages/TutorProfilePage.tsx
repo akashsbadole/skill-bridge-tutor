@@ -1,12 +1,13 @@
+
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Star } from 'lucide-react';
-import { demoTutors } from '@/data/tutors';
+import { tutors } from '@/data/tutors';
 
-const demoTutor = demoTutors[0];
+const demoTutor = tutors[0];
 
 const demoReviews = [
   {
