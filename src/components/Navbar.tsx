@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -25,6 +24,12 @@ const Navbar: React.FC = () => {
           </Link>
           <Link to="/become-tutor" className="text-tutorpro-darkgray hover:text-tutorpro-teal transition-colors">
             Become a Tutor
+          </Link>
+          <Link to="/bookings" className="text-tutorpro-darkgray hover:text-tutorpro-teal transition-colors">
+            Bookings
+          </Link>
+          <Link to="/tutor-dashboard" className="text-tutorpro-darkgray hover:text-tutorpro-teal transition-colors">
+            Tutor Dashboard
           </Link>
         </nav>
         
