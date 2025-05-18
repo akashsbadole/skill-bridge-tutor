@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -16,20 +17,29 @@ const Navbar: React.FC = () => {
           <Link to="/tutors" className="text-tutorpro-darkgray hover:text-tutorpro-teal transition-colors">
             Find Tutors
           </Link>
-          <Link to="/subjects" className="text-tutorpro-darkgray hover:text-tutorpro-teal transition-colors">
-            Subjects
+          <Link to="/courses" className="text-tutorpro-darkgray hover:text-tutorpro-teal transition-colors">
+            Course Search
           </Link>
-          <Link to="/how-it-works" className="text-tutorpro-darkgray hover:text-tutorpro-teal transition-colors">
-            How It Works
+          <Link to="/group-tuitions" className="text-tutorpro-darkgray hover:text-tutorpro-teal transition-colors">
+            Group Tuitions
           </Link>
-          <Link to="/become-tutor" className="text-tutorpro-darkgray hover:text-tutorpro-teal transition-colors">
-            Become a Tutor
+          <Link to="/forum" className="text-tutorpro-darkgray hover:text-tutorpro-teal transition-colors">
+            Forum
+          </Link>
+          <Link to="/training-resources" className="text-tutorpro-darkgray hover:text-tutorpro-teal transition-colors">
+            Tutor Training
           </Link>
           <Link to="/bookings" className="text-tutorpro-darkgray hover:text-tutorpro-teal transition-colors">
             Bookings
           </Link>
+          <Link to="/payment" className="text-tutorpro-darkgray hover:text-tutorpro-teal transition-colors">
+            Payment
+          </Link>
           <Link to="/tutor-dashboard" className="text-tutorpro-darkgray hover:text-tutorpro-teal transition-colors">
             Tutor Dashboard
+          </Link>
+          <Link to="/support" className="text-tutorpro-darkgray hover:text-tutorpro-teal transition-colors">
+            Support
           </Link>
         </nav>
         

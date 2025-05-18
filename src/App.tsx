@@ -17,6 +17,11 @@ import DemoDashboard from "./pages/DemoDashboard";
 import CoursesPage from "@/pages/CoursesPage";
 import BookingsPage from "./pages/BookingsPage";
 import TutorDashboard from "./pages/TutorDashboard";
+import GroupTuitionsPage from "@/pages/GroupTuitionsPage";
+import ForumPage from "@/pages/ForumPage";
+import TrainingResourcesPage from "@/pages/TrainingResourcesPage";
+import PaymentPage from "@/pages/PaymentPage";
+import SupportPage from "@/pages/SupportPage";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +44,11 @@ const App = () => (
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/demo-dashboard" element={<DemoDashboard />} />
               <Route path="/courses" element={<CoursesPage />} />
+              <Route path="/group-tuitions" element={<GroupTuitionsPage />} />
+              <Route path="/forum" element={<ForumPage />} />
+              <Route path="/training-resources" element={<TrainingResourcesPage />} />
+              <Route path="/payment" element={<PaymentPage />} />
+              <Route path="/support" element={<SupportPage />} />
               <Route path="/bookings" element={<BookingsPage />} />
               <Route path="/tutor-dashboard" element={<TutorDashboard />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
