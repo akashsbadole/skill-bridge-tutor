@@ -101,3 +101,42 @@ export interface PaymentRecord {
   status: "pending" | "paid" | "failed";
   createdAt: string;
 }
+
+// Book a Session Requirement
+export interface SessionRequirement {
+  id: string;
+  studentId: string;
+  subject: string;
+  description: string;
+  sessionsRequested: number;
+  status: "pending" | "accepted" | "completed" | "cancelled";
+  createdAt: string;
+  assignedTutorId?: string; // tutor whom user accepted
+  responses: SessionRequirementResponse[];
+}
+
+// Tutor's response to a requirement
+export interface SessionRequirementResponse {
+  id: string;
+  tutorId: string;
+  tutorName: string;
+  message: string;
+  sentAt: string;
+  accepted?: boolean;
+}
+
+// Points system (simple)
+export interface PointTransaction {
+  id: string;
+  userId: string;
+  amount: number;
+  reason: string;
+  createdAt: string;
+}
+
+// User point summary
+export interface UserPoints {
+  userId: string;
+  totalPoints: number;
+  transactions: PointTransaction[];
+}

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, CardContent } from "@/components/ui/card";
@@ -6,6 +5,9 @@ import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Star } from 'lucide-react';
 import { tutors } from '@/data/tutors';
+import BookSessionForm from "@/components/BookSessionForm";
+import { TutorConnectPanel } from "@/components/TutorConnectPanel";
+import { toast } from "@/hooks/use-toast";
 
 const demoTutor = tutors[0];
 
@@ -37,11 +39,26 @@ function ReviewStars({ rating }: { rating: number }) {
   );
 }
 
+// Demo current user (student)
+const demoUser = {
+  id: "student1",
+  name: "Alex Student",
+  email: "alex@student.com",
+  role: "student" as const,
+};
+
 export default function TutorProfilePage() {
   const { id: tutorId } = useParams<{ id: string }>();
   const [reviews, setReviews] = useState(demoReviews);
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [reviewData, setReviewData] = useState({ name: '', rating: 5, comment: '' });
+  const [sessionRequirement, setSessionRequirement] = useState<null | {
+    subject: string;
+    description: string;
+    sessionsRequested: number;
+  }>(null);
+  const [points, setPoints] = useState(20);
+  const [acceptedTutorId, setAcceptedTutorId] = useState<string | undefined>(undefined);
 
   function handleReviewChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setReviewData({ ...reviewData, [e.target.name]: e.target.value });
@@ -59,8 +76,34 @@ export default function TutorProfilePage() {
     setShowReviewForm(false);
   }
 
+  // Show success toast on booking request submit
+  function handleBookSessionSubmit(req: { subject: string; description: string; sessionsRequested: number }) {
+    setSessionRequirement(req);
+    setPoints(points + 5);
+    toast({
+      title: "Requirement Sent!",
+      description: "Your session request has been shared with 20 tutors. You will get responses here.",
+      variant: "success",
+    });
+  }
+
+  // Accept tutor and unlock chat
+  function handleAcceptTutor(tutorId: string) {
+    setAcceptedTutorId(tutorId);
+    toast({
+      title: "Tutor Accepted!",
+      description: "Chat unlocked. You can now communicate with your tutor.",
+      variant: "success",
+    });
+  }
+
   return (
     <div className="container mx-auto px-6 py-8 max-w-3xl">
+      {/* Demo Points Badge */}
+      <div className="fixed right-6 top-20 z-20 flex items-center bg-white shadow px-3 py-1 rounded-full border border-tutorpro-blue gap-2">
+        <span className="text-tutorpro-blue font-semibold flex items-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="gold"><path d="M12 17.27l6.18 3.73-1.64-7.03L21 9.24l-7.19-.61L12 2 10.19 8.63 3 9.24l5.46 4.73L6.82 21z"/></svg>My Points: {points}</span>
+      </div>
+
       <Card className="mb-8">
         <CardContent className="p-6">
           <div className="flex items-start gap-6">
@@ -107,6 +150,27 @@ export default function TutorProfilePage() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Book a Session / Connect flow */}
+      <section className="mt-8">
+        <h2 className="text-2xl font-bold mb-4">Book a Session</h2>
+        <p className="text-gray-700">
+          Interested in learning from {demoTutor.name}? Contact them to schedule a session!
+        </p>
+        {!sessionRequirement && (
+          <BookSessionForm tutorName={demoTutor.name} onSubmit={handleBookSessionSubmit} />
+        )}
+        {sessionRequirement && (
+          <TutorConnectPanel
+            requirement={sessionRequirement}
+            onAcceptTutor={handleAcceptTutor}
+            acceptedTutorId={acceptedTutorId}
+            demoUser={demoUser}
+            points={points}
+            onPointsChange={setPoints}
+          />
+        )}
+      </section>
       <section className="mt-10">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-2xl font-bold">Reviews & Ratings</h2>
@@ -178,13 +242,6 @@ export default function TutorProfilePage() {
             </div>
           ))}
         </div>
-      </section>
-      <section className="mt-8">
-        <h2 className="text-2xl font-bold mb-4">Book a Session</h2>
-        <p className="text-gray-700">
-          Interested in learning from {demoTutor.name}? Contact them to schedule a session!
-        </p>
-        <Button className="mt-4 bg-tutorpro-teal hover:bg-tutorpro-blue">Contact Tutor</Button>
       </section>
     </div>
   );
