@@ -83,7 +83,7 @@ export default function TutorProfilePage() {
     toast({
       title: "Requirement Sent!",
       description: "Your session request has been shared with 20 tutors. You will get responses here.",
-      variant: "success",
+      variant: "default",
     });
   }
 
@@ -93,7 +93,7 @@ export default function TutorProfilePage() {
     toast({
       title: "Tutor Accepted!",
       description: "Chat unlocked. You can now communicate with your tutor.",
-      variant: "success",
+      variant: "default",
     });
   }
 

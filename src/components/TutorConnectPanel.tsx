@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChatBox } from "@/components/ChatBox";
+import ChatBox from "@/components/ChatBox";
 import { Message } from "@/types/schema";
 import { User } from "@/types/schema";
 import { Star, MessageSquare, Award } from "lucide-react";
